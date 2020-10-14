@@ -1,0 +1,19 @@
+i {
+    margin: 10px;
+}
+
+#player {
+    display: none;
+}
+
+.warning {
+    color: orange;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}

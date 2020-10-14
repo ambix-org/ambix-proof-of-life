@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script id="token-mgmt">
+        if (<%= set_token %>) {
+            localStorage.setItem("token", "<%= access_token %>");
+        }
+    </script>
+    <script>
+        scriptTag = document.getElementById('token-mgmt');
+        scriptTag.remove();
+        window.location.replace('<%= redirect %>')
+    </script>
+</body>
+</html>
