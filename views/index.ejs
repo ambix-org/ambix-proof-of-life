@@ -8,48 +8,52 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Ambix Proof of Life</h1>
-    <section>
-        <h2>Spotify Web Playback SDK</h2>
-        <fieldset id="token-fieldset">
-            <legend>Access Token</legend>
-            <div>
-                <a href="/spotify-signin"><button>Sign in to Spotify</button></a>
-                <button id="clear-token">Log Out</button>        
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>Spotify Playback Controls</legend>
-            <div>
-                <i class="fas fa-backward" id="previous"></i>
-                <i class="fas fa-play" id="play"></i>
-                <i class="fas fa-pause" id="pause"></i>
-                <i class="fas fa-forward" id="next"></i>
-            </div>
-            <div>
-                <i class="fas fa-volume-down" id="volume-down-spotify"></i>
-                <input type="range" min="0" max="80" value="50" id="volume-range-spotify">
-                <i class="fas fa-volume-up" id="volume-up-spotify"></i>
-            </div>
-        </fieldset>
-    </section>
-    <section>
-        <h2>YouTube iFrame Playback API</h2>
-        <fieldset>
-            <legend>YouTube Playback Controls</legend>
-            <div id="player"></div>
-            <button id="rain">Rain</button>
-            <button id="fireplace">Fireplace</button>
-            <button id="cafe">Cafe</button>
-            <div>
-                <i id="play-yt" class="fas fa-play"></i>
-                <i id="stop-yt" class="fas fa-stop"></i>              
-                <i class="fas fa-volume-down" id="volume-down-yt"></i>
-                <input type="range" min="0" max="100" value="50" id="volume-range-yt">
-                <i class="fas fa-volume-up" id="volume-up-yt"></i>
-            </div>
-        </fieldset>
-    </section>
+    <main>
+        <h1>Ambix Proof of Life</h1>
+        <section>
+            <h2>Spotify Web Playback SDK</h2>
+            <fieldset id="token-fieldset">
+                <legend>Access Token</legend>
+                <div>
+                    <a href="/spotify-signin"><button id="spotify-button">Sign in to Spotify</button></a>
+                    <button id="clear-token">Log Out</button>        
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Spotify Playback Controls</legend>
+                <div>
+                    <i class="fas fa-backward" id="previous"></i>
+                    <i class="fas fa-play" id="play"></i>
+                    <i class="fas fa-pause" id="pause"></i>
+                    <i class="fas fa-forward" id="next"></i>
+                </div>
+                <div>
+                    <i class="fas fa-volume-down" id="volume-down-spotify"></i>
+                    <input type="range" min="0" max="80" value="50" id="volume-range-spotify">
+                    <i class="fas fa-volume-up" id="volume-up-spotify"></i>
+                </div>
+            </fieldset>
+        </section>
+        <section>
+            <h2>YouTube iFrame Playback API</h2>
+            <fieldset>
+                <legend>YouTube Playback Controls</legend>
+                <div id="player"></div>
+                <button id="rain">Rain</button>
+                <button id="fireplace">Fireplace</button>
+                <button id="cafe">Cafe</button>
+                <div>
+                    <i id="play-yt" class="fas fa-play"></i>
+                    <i id="stop-yt" class="fas fa-stop"></i>              
+                    <i class="fas fa-volume-down" id="volume-down-yt"></i>
+                    <input type="range" min="0" max="100" value="50" id="volume-range-yt">
+                    <i class="fas fa-volume-up" id="volume-up-yt"></i>
+                </div>
+            </fieldset>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script src="js/spotify.js"></script>

@@ -3,6 +3,7 @@
 require('dotenv').config();
 const express = require('express');
 const superagent = require('superagent');
+const bodyParser = require('body-parser');
 const app = express();
 
 const PORT = process.env.PORT || 3001;
@@ -12,6 +13,7 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 const HOME_URI = process.env.HOME_URI;
 
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get('/', (request, response) => {
@@ -29,6 +31,38 @@ app.get('/spotify-signin', (request, response) => {
     })
     .catch(error => console.error('Error while obtaining authorization code:', error));
 });
+
+app.post('/spotify-refresh', (request, response) => {
+  const refreshToken = request.body.refresh;
+  const url = `https://accounts.spotify.com/api/token`;
+
+  const buff = Buffer.from(`${SPOTIFY_ID}:${SPOTIFY_SECRET}`, 'utf-8');
+  const encodedID = buff.toString('base64');
+
+  superagent.post(url)
+    .set('Authorization', `Basic ${encodedID}`)
+    .type('form')
+    .send({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken
+    })
+    .then(spotifyResponse => {
+      const accessToken = spotifyResponse.body.access_token;
+      const duration = spotifyResponse.body.expires_in;
+
+      const tokenPackage = {
+        accessToken,
+        refreshToken,
+        duration
+      }
+
+      response.status(200).json(tokenPackage);
+    })
+    .catch(error => {
+      console.error('Error in authorization:\n', error);
+      response.status(401).send()
+    });
+})
 
 app.get('/spotify-redirect', (request, response) => {
   const code = request.query.code;

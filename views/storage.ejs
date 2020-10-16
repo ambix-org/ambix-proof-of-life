@@ -7,9 +7,7 @@
 </head>
 <body>
     <script id="token-mgmt">
-        if (<%= set_token %>) {
-            localStorage.setItem("token", "<%= access_token %>");
-        }
+            localStorage.setItem("refresh", "<%= refresh_token %>")
     </script>
     <script>
         scriptTag = document.getElementById('token-mgmt');

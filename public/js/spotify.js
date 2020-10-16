@@ -2,42 +2,50 @@
 
 // Token Management
 
-const TOKEN = localStorage.getItem('token');
+const REFRESH = localStorage.getItem('refresh');
 
 const fieldset = document.getElementById('token-fieldset');
-let tokenStatus = document.createElement('p');
 let playerStatus = document.createElement('p');
 playerStatus.textContent = 'Player Initializing...';
 playerStatus.setAttribute('class', 'warning');
 
-fieldset.appendChild(tokenStatus);
 fieldset.appendChild(playerStatus);
 
-if (!TOKEN) {
-  tokenStatus.setAttribute('class', 'error');
-  tokenStatus.textContent = 'Please submit an access token...';
+if (!REFRESH) {
+  playerStatus.setAttribute('class', 'error');
+  playerStatus.textContent = 'Please sign in to Spotify';
+  const logoutButton = document.getElementById('clear-token');
+  logoutButton.setAttribute('class', 'hidden');
 } else {
-  tokenStatus.setAttribute('class', 'success');
-  tokenStatus.textContent = 'Token retrieved from storage';
+  const spotifyButton = document.getElementById('spotify-button');
+  spotifyButton.textContent = 'Refresh Spotify Acess';
 }
 
 const clearTokenButton = document.getElementById('clear-token');
 clearTokenButton.addEventListener('click', () => {
-  localStorage.removeItem('token');
-  tokenStatus.textContent = 'Token cleared. Please submit token.'
-  tokenStatus.setAttribute('class', 'warning')
+  localStorage.removeItem('refresh');
   location.reload();
-})
+});
 
 // Spotify Web Playback SDK
 
 let spotifyPlayer;
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-  console.log(TOKEN)
   spotifyPlayer = new Spotify.Player({
     name: 'Ambix',
-    getOAuthToken: cb => { cb(TOKEN); }
+    // This function is called on connect() and every hour to re-auth
+    getOAuthToken: cb => {
+      console.log('Authorizing Spotify Player')
+      axios.post('http://localhost:3000/spotify-refresh', `refresh=${REFRESH}`)
+        .then(response => {
+          const accessToken = response.data.accessToken;
+          const refreshToken = response.data.refreshToken;
+          localStorage.setItem('refresh', refreshToken);
+          cb(accessToken);
+        })
+        .catch( err => console.error('TOKEN ERROR:', err));
+    }
   });
 
   // Error handling
@@ -68,7 +76,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   // Ready
   spotifyPlayer.addListener('ready', ({ device_id }) => {
     console.log('Ready with Device ID', device_id);
-    playerStatus.textContent = 'Spotify Web Playback SDK is ready';
+    playerStatus.textContent = 'Select the \'Ambix\' device in Spotify to begin streaming';
     playerStatus.setAttribute('class', 'success');
   });
 

@@ -8,7 +8,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 let player;
 
-function onYouTubeIframeAPIReady() {
+function onYouTubeIframeAPIReady() {  // eslint-disable-line
   player = new YT.Player('player', {
     height: '390',
     width: '640',
