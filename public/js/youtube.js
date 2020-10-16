@@ -32,20 +32,7 @@ stopYTButton.addEventListener('click', () => {
   player.stopVideo();
 });
 
-const rainButton = document.getElementById('rain');
-rainButton.addEventListener('click', () => {
-  player.loadVideoById('LlKyGAGHc4c');
-});
 
-const fireplaceButton = document.getElementById('fireplace');
-fireplaceButton.addEventListener('click', () => {
-  player.loadVideoById('K0pJRo0XU8s');
-});
-
-const cafeButton = document.getElementById('cafe');
-cafeButton.addEventListener('click', () => {
-  player.loadVideoById('gaGrHUekGrc')
-})
 
 const volumeRange = document.getElementById('volume-range-yt');
 volumeRange.addEventListener('change', () => {
@@ -90,3 +77,28 @@ function onPlayerStateChange(event) {
   console.log('State Changed!')
   console.log(event.data)
 }
+
+// Ambient Sources
+const ambienceSources = [
+  ['Rain', 'LlKyGAGHc4c'],
+  ['Fireplace', 'K0pJRo0XU8s'],
+  ['Cafe', 'gaGrHUekGrc']
+]
+
+const ambientTracks = document.getElementById('ambience-tracks');
+ambienceSources.forEach(source => {
+  // const button = document.getElementById(source[0]);
+  const button = document.createElement('button');
+  button.textContent = source[0]
+  button.setAttribute('class', 'track');
+  button.addEventListener('click', () => {
+    player.loadVideoById(source[1])
+    const buttons = document.getElementsByClassName('track');
+    for (let i = 0; i < buttons.length; i++){
+      buttons[i].setAttribute('class', 'track');
+    }
+    button.setAttribute('class', 'selected track');
+
+  });
+  ambientTracks.appendChild(button);
+});

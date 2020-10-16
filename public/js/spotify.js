@@ -18,7 +18,7 @@ if (!REFRESH) {
   logoutButton.setAttribute('class', 'hidden');
 } else {
   const spotifyButton = document.getElementById('spotify-button');
-  spotifyButton.textContent = 'Refresh Spotify Acess';
+  spotifyButton.textContent = 'Reauthorize';
 }
 
 const clearTokenButton = document.getElementById('clear-token');
@@ -76,7 +76,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   // Ready
   spotifyPlayer.addListener('ready', ({ device_id }) => {
     console.log('Ready with Device ID', device_id);
-    playerStatus.textContent = 'Select the \'Ambix\' device in Spotify to begin streaming';
+    playerStatus.textContent = 'Ready, select \'Ambix\' in Spotify';
     playerStatus.setAttribute('class', 'success');
   });
 

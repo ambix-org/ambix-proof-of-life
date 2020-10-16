@@ -1,8 +1,14 @@
-/* @import url('./reset.css'); */
+@import url('./reset.css');
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Montserrat&display=swap');
 
 html, body {
     height: 100%;
     width: 100%;
+    background: linear-gradient(
+        rgb(11, 77, 62), 8%,
+        rgb(129, 184, 206),92%,
+        rgb(11, 77, 62)
+    )
 }
 
 body {
@@ -10,12 +16,51 @@ body {
     justify-content: center;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
 h1, h2 {
+    font-family: 'Major Mono Display', sans-serif;
     text-align: center;
 }
 
+h1 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
 i {
-    margin: 10px;
+    margin: 20px;
+}
+
+button {
+    background-color: rgb(198, 221, 230);
+    font-family: 'Montserrat', sans-serif;
+    margin: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 4px 8px rgb(59, 59, 59);
+    transition: all .2s ease-in;
+}
+
+button:focus {
+    outline: none;
 }
 
 #player {
@@ -23,21 +68,41 @@ i {
 }
 
 .warning {
-    color: orange;
+    color: rgb(189, 79, 15);
 }
 
 .success {
-    color: green;
+    color: rgb(16, 93, 16);
 }
 
 .error {
-    color: red;
+    color: rgb(189, 15, 15);
 }
 
 .hidden {
     display: none;
 }
 
-fieldset {
-    width: 300px;
+.player-controls, .volume-controls, .spotify-connect-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.spotify-connect-buttons {
+    flex-direction: row;
+}
+
+#token-fieldset p {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+#ambience-tracks {
+    display: flex;
+    justify-content: center;
+}
+
+.selected {
+    background-color: rgb(194, 168, 214);
 }
