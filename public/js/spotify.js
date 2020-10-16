@@ -3,6 +3,7 @@
 // Token Management
 
 const REFRESH = localStorage.getItem('refresh');
+const REFRESH_URI = 'https://ambix-sandbox.herokuapp.com/spotify-refresh';
 
 const fieldset = document.getElementById('token-fieldset');
 let playerStatus = document.createElement('p');
@@ -37,7 +38,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     // This function is called on connect() and every hour to re-auth
     getOAuthToken: cb => {
       console.log('Authorizing Spotify Player')
-      axios.post('http://localhost:3000/spotify-refresh', `refresh=${REFRESH}`)
+      axios.post(REFRESH_URI, `refresh=${REFRESH}`)
         .then(response => {
           const accessToken = response.data.accessToken;
           const refreshToken = response.data.refreshToken;
