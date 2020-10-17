@@ -1,10 +1,12 @@
 'use strict';
 
-let tag = document.createElement('script');
-tag.src = 'https://www.youtube.com/iframe_api'
-
-let firstScriptTag = document.getElementsByTagName('script')[0];
+//========================
+// DON'T convert to JQuery
+var tag = document.createElement('script');
+tag.src = 'https://www.youtube.com/iframe_api';
+var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+//========================
 
 let player;
 
@@ -20,57 +22,55 @@ function onYouTubeIframeAPIReady() {  // eslint-disable-line
   });
 }
 
-const playYTButton = document.getElementById('play-yt')
-playYTButton.addEventListener('click', () => {
+const $playYT = $('#play-yt')
+$playYT.click( () => {
   console.log('Starting Video');
   player.playVideo();
 });
 
-const stopYTButton = document.getElementById('stop-yt');
-stopYTButton.addEventListener('click', () => {
+const $stopYT = $('#stop-yt');
+$stopYT.click( () => {
   console.log('Stopping Video');
   player.stopVideo();
 });
 
-
-
-const volumeRange = document.getElementById('volume-range-yt');
-volumeRange.addEventListener('change', () => {
-  let newLevel = volumeRange.value;
+const $volumeRange = $('#volume-range-yt');
+$volumeRange.change( () => {
+  let newLevel = $volumeRange.value;
   player.setVolume(newLevel);
   console.log(`Volume set to ${newLevel}`);
 })
 
-const volumeUpButton = document.getElementById('volume-up-yt');
-volumeUpButton.addEventListener('click', () => {
+const $volumeUpYT = $('#volume-up-yt');
+$volumeUpYT.click( () => {
   let currentLevel = player.getVolume();
   let newLevel = currentLevel + 1;
   if (newLevel <= 100) {
     player.setVolume(newLevel);
-    volumeRange.value = newLevel;
+    $volumeRange.val(newLevel);
     console.log(`Volume set to ${currentLevel}`);
   } else {
     console.log('Volume maxxed out.');
   }
 });
 
-const volumeDownButton = document.getElementById('volume-down-yt');
-volumeDownButton.addEventListener('click', () => {
+const $volumeDownYT = $('#volume-down-yt');
+$volumeDownYT.click( () => {
   let currentLevel = player.getVolume();
   let newLevel = currentLevel - 1;
   if (newLevel >= 0) {
     player.setVolume(newLevel);
-    volumeRange.value = newLevel;
+    $volumeRange.val(newLevel);
     console.log(`Volume set to ${currentLevel}`);
   } else {
     console.log('Volume minned out.');
   }
 });
-
+// ===================================
 function onPlayerReady() {
   console.log('Video Ready!')
   console.log(`Default volume: ${player.getVolume()}`)
-  volumeRange.value = player.getVolume();
+  $volumeRange.val(player.getVolume());
 }
 
 function onPlayerStateChange(event) {
@@ -85,20 +85,15 @@ const ambienceSources = [
   ['Cafe', 'gaGrHUekGrc']
 ]
 
-const ambientTracks = document.getElementById('ambience-tracks');
+const $ambientTracks = $('#ambience-tracks');
 ambienceSources.forEach(source => {
   // const button = document.getElementById(source[0]);
-  const button = document.createElement('button');
-  button.textContent = source[0]
-  button.setAttribute('class', 'track');
-  button.addEventListener('click', () => {
+  const $button = $(`<button class="track">${source[0]}</button>`);
+  $button.click( () => {
     player.loadVideoById(source[1])
-    const buttons = document.getElementsByClassName('track');
-    for (let i = 0; i < buttons.length; i++){
-      buttons[i].setAttribute('class', 'track');
-    }
-    button.setAttribute('class', 'selected track');
+    $('track').each(() => $(this).attr('class', 'track'));
+    $button.addClass('selected');
 
   });
-  ambientTracks.appendChild(button);
+  $ambientTracks.append($button);
 });

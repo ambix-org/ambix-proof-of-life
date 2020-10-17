@@ -167,7 +167,7 @@ $volumeUpSpotify.click( () => {
 });
 
 const $volumeRangeSpotify = $('#volume-range-spotify');
-$volumeRangeSpotify.addEventListener('change', () => {
+$volumeRangeSpotify.change( () => {
   let newLevel = $volumeRangeSpotify.val() / 100;
   spotifyPlayer.setVolume(newLevel)
     .then(() => {
