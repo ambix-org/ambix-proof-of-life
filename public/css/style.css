@@ -8,15 +8,16 @@ html {
     height: 100%;
     width: 100%;
     background: linear-gradient(
-    rgb(11, 77, 62), 8%,
-    rgb(129, 184, 206),92%,
-    rgb(11, 77, 62)
+    rgb(0 0 0), 8%,
+    rgb(5 29 24),92%,
+    rgb(0 0 0)
     );
     background-attachment: fixed;
     background-repeat: no-repeat;
 }
 
 body {
+    color: #afafaf;
     display: flex;
     justify-content: center;
 }
@@ -54,7 +55,8 @@ i {
 }
 
 button {
-    background-color: rgb(198, 221, 230);
+    font-weight: bold;
+    background-color: rgb(71 128 88);
     font-family: 'Montserrat', sans-serif;
     margin: 20px;
     padding: 10px;
@@ -135,11 +137,12 @@ button:focus {
 }
 
 .selected {
-    background-color: rgb(194, 168, 214);
+    background-color: rgb(105 71 130);
+    color: rgb(175 175 175);
 }
 
 .module {
-    border: 1px solid black;
+    border: 2px solid #757575;
     border-radius: 5px;
     padding: 20px;
 }
