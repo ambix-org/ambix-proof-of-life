@@ -10,51 +10,56 @@
 <body>
     <main>
         <h1>Ambix</h1>
-        <section id="token-fieldset">
+        <div id="media">
+            <section id="spotify-player" class="module">
+                <div id="track-info">
+                    <div id="artwork-box">
+                        <img id="artwork" src="img/spotify-icon.png" alt="no album art">
+                    </div>
+                    <p id="song-title">Song Title</p>
+                    <p id="artist">Artist</p>
+                </div>
+                <div class="player-controls">
+                    <i class="fas fa-backward" id="previous"></i>
+                    <i class="fas fa-play" id="play"></i>
+                    <i class="fas fa-pause" id="pause"></i>
+                    <i class="fas fa-forward" id="next"></i>
+                </div>
+                <div class="volume-controls">
+                    <i class="fas fa-volume-down" id="volume-down-spotify"></i>
+                    <input type="range" min="0" max="80" value="50" id="volume-range-spotify">
+                    <i class="fas fa-volume-up" id="volume-up-spotify"></i>
+                </div>
+            </section>
+            <section id="ambience-mixer" class="module">
+                <h2>Ambience Mixer</h2>
+                <div id="player"></div>
+                <div id="ambience-tracks"></div>
+                <div class="player-controls">
+                    <i id="play-yt" class="fas fa-play"></i>
+                    <i id="stop-yt" class="fas fa-stop"></i>
+                </div>
+                <div class="volume-controls">              
+                    <i class="fas fa-volume-down" id="volume-down-yt"></i>
+                    <input type="range" min="0" max="100" value="50" id="volume-range-yt">
+                    <i class="fas fa-volume-up" id="volume-up-yt"></i>
+                </div>
+            </section>
+        </div>
+        <section id="spotify-connect" class="module">
             <h2>spotify connect</h2>
             <div class="spotify-connect-buttons">
-                <a href="/spotify-signin"><button id="spotify-button">Sign in to Spotify</button></a>
-                <button id="clear-token">Log Out</button>        
+                <a href="/spotify-signin"><button id="login">Sign in to Spotify</button></a>
+                <button id="logout">Log Out</button>        
             </div>
-        </section>
-        <section>
-            <h2>spotify playback controls</h2>
-            <div id="track-info">
-                <img id="album-artwork" src="img/spotify-icon.png" alt="no album art">
-                <p id="song-title">Song Title</p>
-                <p id="artist">Artist</p>
-            </div>
-            <div class="player-controls">
-                <i class="fas fa-backward" id="previous"></i>
-                <i class="fas fa-play" id="play"></i>
-                <i class="fas fa-pause" id="pause"></i>
-                <i class="fas fa-forward" id="next"></i>
-            </div>
-            <div class="volume-controls">
-                <i class="fas fa-volume-down" id="volume-down-spotify"></i>
-                <input type="range" min="0" max="80" value="50" id="volume-range-spotify">
-                <i class="fas fa-volume-up" id="volume-up-spotify"></i>
-            </div>
-        </section>
-        <section>
-            <h2>Ambience Mixer</h2>
-            <div id="player"></div>
-            <div id="ambience-tracks"></div>
-            <div class="player-controls">
-                <i id="play-yt" class="fas fa-play"></i>
-                <i id="stop-yt" class="fas fa-stop"></i>
-            </div>
-            <div class="volume-controls">              
-                <i class="fas fa-volume-down" id="volume-down-yt"></i>
-                <input type="range" min="0" max="100" value="50" id="volume-range-yt">
-                <i class="fas fa-volume-up" id="volume-up-yt"></i>
-            </div>
+            <p id="player-status"></p>
         </section>
     </main>
-
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    
     <script src="js/spotify.js"></script>
     <script src="js/youtube.js"></script>
 </body>
