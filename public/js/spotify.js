@@ -3,7 +3,7 @@
 // Token Management
 
 const REFRESH = localStorage.getItem('refresh');
-const REFRESH_URI = 'https://ambix-sandbox.herokuapp.com/spotify-refresh';
+const REFRESH_URI = 'http://localhost:3000/spotify-refresh';
 
 const fieldset = document.getElementById('token-fieldset');
 let playerStatus = document.createElement('p');
@@ -68,6 +68,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   // Playback status updates
   spotifyPlayer.addListener('player_state_changed', state => {
     console.log('State Change: ', state);
+    displayTrackInfo(state);
     spotifyPlayer.getVolume()
       .then(currentLevel => {
         volumeRangeSpotify.value = currentLevel * 100;
@@ -89,6 +90,27 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   // Connect to the player!
   spotifyPlayer.connect();
 };
+
+function displayTrackInfo(state){
+  const artworkEl = document.getElementById('album-artwork');
+  const artistEl = document.getElementById('artist');
+  const titleEl = document.getElementById('song-title')
+
+  const artistName = state.track_window.current_track.artists.reduce((accum, artist) => {
+    if (accum) {
+      accum += ' | ';
+    }
+    return `${accum}${artist.name}`;
+  }, '');
+  const songTitle = state.track_window.current_track.name;
+  const artworkURL = state.track_window.current_track.album.images[0].url || null;
+
+  artworkEl.src = artworkURL;
+  artworkEl.alt = songTitle;
+  artworkEl.setAttribute('class', 'artwork');
+  titleEl.textContent = songTitle;
+  artistEl.textContent = artistName;
+}
 
 // Controls
 
