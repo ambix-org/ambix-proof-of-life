@@ -3,27 +3,26 @@
 // Token Management
 
 const REFRESH = localStorage.getItem('refresh');
-const REFRESH_URI = 'https://ambix.herokuapp.com/spotify-refresh';
+const REFRESH_URI = 'http://localhost:3000/spotify-refresh';
 
-const fieldset = document.getElementById('token-fieldset');
-let playerStatus = document.createElement('p');
-playerStatus.textContent = 'Player Initializing...';
-playerStatus.setAttribute('class', 'warning');
+const $spotifyConnect = $('#spotify-connect');
+let $playerStatus = $('#player-status');
+$playerStatus.text('Player Initializing...');
+$playerStatus.addClass('warning');
 
-fieldset.appendChild(playerStatus);
+$spotifyConnect.append($playerStatus);
 
 if (!REFRESH) {
-  playerStatus.setAttribute('class', 'error');
-  playerStatus.textContent = 'Please sign in to Spotify';
-  const logoutButton = document.getElementById('clear-token');
-  logoutButton.setAttribute('class', 'hidden');
+  $playerStatus.attr('class', 'error');
+  $playerStatus.text('Please sign in to Spotify');
+  const $logoutButton = $('#logout');
+  $logoutButton.addClass('hidden');
 } else {
-  const spotifyButton = document.getElementById('spotify-button');
-  spotifyButton.textContent = 'Reauthorize';
+  const $spotifyButton = $('#login');
+  $spotifyButton.text('Reauthorize');
 }
-
-const clearTokenButton = document.getElementById('clear-token');
-clearTokenButton.addEventListener('click', () => {
+const $logout = $('#logout');
+$logout.click( () => {
   localStorage.removeItem('refresh');
   location.reload();
 });
@@ -55,8 +54,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   });
   spotifyPlayer.addListener('authentication_error', ({ message }) => {
     console.error('Authentication Error:', message);
-    playerStatus.textContent = 'Authorization Failed. Token stale?';
-    playerStatus.setAttribute('class', 'error');
+    $playerStatus.text('Authorization Failed. Token stale?');
+    $playerStatus.attr('class', 'error');
   });
   spotifyPlayer.addListener('account_error', ({ message }) => {
     console.error('Account Error:', message);
@@ -71,15 +70,15 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     displayTrackInfo(state);
     spotifyPlayer.getVolume()
       .then(currentLevel => {
-        volumeRangeSpotify.value = currentLevel * 100;
+        $volumeRangeSpotify.value = currentLevel * 100;
       });
   });
 
   // Ready
   spotifyPlayer.addListener('ready', ({ device_id }) => {
     console.log('Ready with Device ID', device_id);
-    playerStatus.textContent = 'Ready, select \'Ambix\' in Spotify';
-    playerStatus.setAttribute('class', 'success');
+    $playerStatus.text('Ready, select \'Ambix\' in Spotify');
+    $playerStatus.attr('class', 'success');
   });
 
   // Not Ready
@@ -92,58 +91,55 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 };
 
 function displayTrackInfo(state){
-  const artworkEl = document.getElementById('album-artwork');
-  const artistEl = document.getElementById('artist');
-  const titleEl = document.getElementById('song-title')
+  const $artwork = $('#artwork');
+  const $artist = $('#artist');
+  const $title = $('#song-title')
 
   const artistName = state.track_window.current_track.artists.reduce((accum, artist) => {
-    if (accum) {
-      accum += ' | ';
-    }
-    return `${accum}${artist.name}`;
+    return accum ? `${accum} | ${artist.name}` : `${artist.name}`;
   }, '');
   const songTitle = state.track_window.current_track.name;
-  const artworkURL = state.track_window.current_track.album.images[0].url || null;
+  const artworkURL = state.track_window.current_track.album.images[0].url || './img/spotify-icon.png';
 
-  artworkEl.src = artworkURL;
-  artworkEl.alt = songTitle;
-  artworkEl.setAttribute('class', 'artwork');
-  titleEl.textContent = songTitle;
-  artistEl.textContent = artistName;
+  $artwork.attr('src', artworkURL);
+  $artwork.attr('alt', songTitle);
+  $artwork.addClass('display-artwork');
+  $title.text(songTitle);
+  $artist.text(artistName);
 }
 
 // Controls
 
-const playSpotifyButton = document.getElementById('play');
-playSpotifyButton.addEventListener('click', () => {
+const $playSpotify = $('#play');
+$playSpotify.click( () => {
   spotifyPlayer.resume().then(() => {
     console.log('Resumed!');
   });
 });
 
-const pauseSpotifyButton = document.getElementById('pause');
-pauseSpotifyButton.addEventListener('click', () => {
+const $pauseSpotify = $('#pause');
+$pauseSpotify.click( () => {
   spotifyPlayer.pause().then(() => {
     console.log('Paused!');
   });
 });
 
-const nextSpotifyButton = document.getElementById('next');
-nextSpotifyButton.addEventListener('click', () => {
+const $nextTrack = $('#next');
+$nextTrack.click( () => {
   spotifyPlayer.nextTrack().then(() => {
     console.log('Skipped to next track!');
   });
 });
 
-const previousSpotifyButton = document.getElementById('previous');
-previousSpotifyButton.addEventListener('click', () => {
+const $previousTrack = $('#previous');
+$previousTrack.click( () => {
   spotifyPlayer.previousTrack().then(() => {
     console.log('Set to previous track!');
   });
 });
 
-const volumeDownSpotify = document.getElementById('volume-down-spotify');
-volumeDownSpotify.addEventListener('click', () => {
+const $volumeDownSpotify = $('#volume-down-spotify');
+$volumeDownSpotify.click( () => {
   spotifyPlayer.getVolume()
     .then(currentLevel => {
       const newLevel = currentLevel - 0.01;
@@ -156,8 +152,8 @@ volumeDownSpotify.addEventListener('click', () => {
     });
 });
 
-const volumeUpSpotify = document.getElementById('volume-up-spotify');
-volumeUpSpotify.addEventListener('click', () => {
+const $volumeUpSpotify = $('#volume-up-spotify');
+$volumeUpSpotify.click( () => {
   spotifyPlayer.getVolume()
     .then(currentLevel => {
       const newLevel = currentLevel + 0.01;
@@ -170,9 +166,9 @@ volumeUpSpotify.addEventListener('click', () => {
     });
 });
 
-const volumeRangeSpotify = document.getElementById('volume-range-spotify');
-volumeRangeSpotify.addEventListener('change', () => {
-  let newLevel = volumeRangeSpotify.value / 100;
+const $volumeRangeSpotify = $('#volume-range-spotify');
+$volumeRangeSpotify.addEventListener('change', () => {
+  let newLevel = $volumeRangeSpotify.val() / 100;
   spotifyPlayer.setVolume(newLevel)
     .then(() => {
       console.log(`Volume set to ${newLevel}.`)

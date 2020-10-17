@@ -10,17 +10,20 @@
 <body>
     <main>
         <h1>Ambix</h1>
-        <section id="token-fieldset">
+        <section id="spotify-connect" class="module">
             <h2>spotify connect</h2>
             <div class="spotify-connect-buttons">
-                <a href="/spotify-signin"><button id="spotify-button">Sign in to Spotify</button></a>
-                <button id="clear-token">Log Out</button>        
+                <a href="/spotify-signin"><button id="login">Sign in to Spotify</button></a>
+                <button id="logout">Log Out</button>        
             </div>
+            <p id="player-status"></p>
         </section>
-        <section>
-            <h2>spotify playback controls</h2>
+        <section id="spotify-player" class="module">
+            <!-- <h2>spotify playback controls</h2> -->
             <div id="track-info">
-                <img id="album-artwork" src="img/spotify-icon.png" alt="no album art">
+                <div id="artwork-box">
+                    <img id="artwork" src="img/spotify-icon.png" alt="no album art">
+                </div>
                 <p id="song-title">Song Title</p>
                 <p id="artist">Artist</p>
             </div>
@@ -36,7 +39,7 @@
                 <i class="fas fa-volume-up" id="volume-up-spotify"></i>
             </div>
         </section>
-        <section>
+        <section id="ambience-mixer" class="module">
             <h2>Ambience Mixer</h2>
             <div id="player"></div>
             <div id="ambience-tracks"></div>
@@ -52,9 +55,10 @@
         </section>
     </main>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    
     <script src="js/spotify.js"></script>
     <script src="js/youtube.js"></script>
 </body>

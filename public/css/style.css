@@ -1,19 +1,19 @@
 @import url('./reset.css');
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Montserrat&display=swap');
 
-html, body {
+html {
     height: 100%;
     width: 100%;
-}
-
-body {
     background: linear-gradient(
-        rgb(11, 77, 62), 8%,
-        rgb(129, 184, 206),92%,
-        rgb(11, 77, 62)
+    rgb(11, 77, 62), 8%,
+    rgb(129, 184, 206),92%,
+    rgb(11, 77, 62)
     );
     background-attachment: fixed;
     background-repeat: no-repeat;
+}
+
+body {
     display: flex;
     justify-content: center;
 }
@@ -38,7 +38,7 @@ h1, h2 {
 
 h1 {
     font-size: 36px;
-    margin-bottom: 40px;
+    margin: 40px 0;
 }
 
 h2 {
@@ -64,11 +64,7 @@ button {
 button:focus {
     outline: none;
 }
-
-#player {
-    display: none;
-}
-
+    
 .warning {
     color: rgb(189, 79, 15);
 }
@@ -92,6 +88,15 @@ button:focus {
     justify-content: center;
 }
 
+#player {
+    display: none;
+}
+#player-status {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    height: 2em;
+}
+
 #track-info {
     display: flex;
     flex-direction: column;
@@ -99,14 +104,10 @@ button:focus {
     font-family: 'Montserrat', sans-serif;
     text-align: center;
 }
-
+    
 #track-info img {
     margin: 0 auto 20px auto;
     width: 300px;
-}
-
-.artwork {
-    box-shadow: 2px 4px 8px rgb(59, 59, 59);
 }
 
 #song-title {
@@ -124,17 +125,39 @@ button:focus {
     flex-direction: row;
 }
 
-#token-fieldset p {
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-}
-
 #ambience-tracks {
     display: flex;
     justify-content: center;
+    height: 80px;
 }
 
 .selected {
     background-color: rgb(194, 168, 214);
+}
+
+.module {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+#spotify-connect {
+    text-align: center;
+}
+
+/* ALBUM ARTWORK */
+
+#artwork-box {
+    transition: all 2s ease-in;
+    background-image: url('../img/spotify-icon.png');
+    background-repeat: no-repeat;
+    height: 300px;
+    width: 300px;
+    margin-bottom: 10px;
+    /* opacity: 0; */
+}
+
+.display-artwork {
+    transition: all 2s ease-in;
+    box-shadow: 2px 4px 8px rgb(59, 59, 59);
 }
