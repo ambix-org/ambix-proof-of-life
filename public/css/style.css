@@ -78,11 +78,11 @@ button:focus {
 }
 
 .success {
-    color: rgb(16, 93, 16);
+    color: rgb(71, 128, 88);
 }
 
 .error {
-    color: rgb(71, 128, 88);;
+    color: rgb(189, 15, 15);
 }
 
 .hidden {
