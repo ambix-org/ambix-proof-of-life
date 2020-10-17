@@ -3,7 +3,7 @@
 // Token Management
 
 const REFRESH = localStorage.getItem('refresh');
-const REFRESH_URI = 'http://ambix.herokuapp.com/spotify-refresh';
+const REFRESH_URI = 'https://ambix.herokuapp.com/spotify-refresh';
 
 const fieldset = document.getElementById('token-fieldset');
 let playerStatus = document.createElement('p');
