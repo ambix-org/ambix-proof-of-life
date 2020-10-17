@@ -87,13 +87,11 @@ const ambienceSources = [
 
 const $ambientTracks = $('#ambience-tracks');
 ambienceSources.forEach(source => {
-  // const button = document.getElementById(source[0]);
   const $button = $(`<button class="track">${source[0]}</button>`);
   $button.click( () => {
     player.loadVideoById(source[1])
     $('track').each(() => $(this).attr('class', 'track'));
     $button.addClass('selected');
-
   });
   $ambientTracks.append($button);
 });
