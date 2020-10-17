@@ -36,7 +36,7 @@ $stopYT.click( () => {
 
 const $volumeRange = $('#volume-range-yt');
 $volumeRange.change( () => {
-  let newLevel = $volumeRange.value;
+  let newLevel = $volumeRange.val();
   player.setVolume(newLevel);
   console.log(`Volume set to ${newLevel}`);
 })
@@ -90,7 +90,8 @@ ambienceSources.forEach(source => {
   const $button = $(`<button class="track">${source[0]}</button>`);
   $button.click( () => {
     player.loadVideoById(source[1])
-    $('track').each(() => $(this).attr('class', 'track'));
+    console.log($('.track'))
+    $('.track').removeClass('selected');
     $button.addClass('selected');
   });
   $ambientTracks.append($button);

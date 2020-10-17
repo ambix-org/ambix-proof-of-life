@@ -10,7 +10,7 @@
 <body>
     <main>
         <h1>Ambix</h1>
-        <div id="media">
+        <div class="module-container">
             <section id="spotify-player" class="module">
                 <div id="track-info">
                     <div id="artwork-box">
@@ -46,14 +46,16 @@
                 </div>
             </section>
         </div>
-        <section id="spotify-connect" class="module">
-            <h2>spotify connect</h2>
-            <div class="spotify-connect-buttons">
-                <a href="/spotify-signin"><button id="login">Sign in to Spotify</button></a>
-                <button id="logout">Log Out</button>        
-            </div>
-            <p id="player-status"></p>
-        </section>
+        <div class="module-container">
+            <section id="spotify-connect" class="module">
+                <h2>spotify connect</h2>
+                <div class="spotify-connect-buttons">
+                    <a href="/spotify-signin"><button id="login">Sign in to Spotify</button></a>
+                    <button id="logout">Log Out</button>        
+                </div>
+                <p id="player-status"></p>
+            </section>
+        </div>
     </main>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
