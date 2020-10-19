@@ -19,6 +19,7 @@ html {
 }
 
 body {
+    /* height: 100%; */
     color: #afafaf;
     display: flex;
     justify-content: center;
@@ -28,6 +29,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: auto;
 }
 
 section {
@@ -44,7 +46,7 @@ h1, h2 {
 }
 
 h1 {
-    font-size: 36px;h1 {
+    font-size: 36px;
     font-size: 36px;
     margin: 40px 0;
 }
@@ -56,8 +58,6 @@ h2 {
 
 i {
     margin: 20px;
-}
-    margin: 40px 0;
 }
 
 h2 {
