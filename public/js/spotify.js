@@ -66,7 +66,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   // Playback status updates
   spotifyPlayer.addListener('player_state_changed', state => {
-    console.log('State Change: ', state);
+    // console.log('State Change: ', state);
     displayTrackInfo(state);
     spotifyPlayer.getVolume()
       .then(currentLevel => {
@@ -112,30 +112,34 @@ function displayTrackInfo(state){
 
 const $playSpotify = $('#play');
 $playSpotify.click( () => {
-  spotifyPlayer.resume().then(() => {
-    console.log('Resumed!');
-  });
+  spotifyPlayer.resume()
+    // .then(() => {
+    //   console.log('Resumed!');
+    // });
 });
 
 const $pauseSpotify = $('#pause');
 $pauseSpotify.click( () => {
-  spotifyPlayer.pause().then(() => {
-    console.log('Paused!');
-  });
+  spotifyPlayer.pause()
+    // .then(() => {
+    //   console.log('Paused!');
+    // });
 });
 
 const $nextTrack = $('#next');
 $nextTrack.click( () => {
-  spotifyPlayer.nextTrack().then(() => {
-    console.log('Skipped to next track!');
-  });
+  spotifyPlayer.nextTrack()
+    // .then(() => {
+    //   console.log('Skipped to next track!');
+    // });
 });
 
 const $previousTrack = $('#previous');
 $previousTrack.click( () => {
-  spotifyPlayer.previousTrack().then(() => {
-    console.log('Set to previous track!');
-  });
+  spotifyPlayer.previousTrack()
+    // .then(() => {
+    //   console.log('Set to previous track!');
+    // });
 });
 
 const $volumeDownSpotify = $('#volume-down-spotify');
@@ -145,9 +149,9 @@ $volumeDownSpotify.click( () => {
       const newLevel = currentLevel - 0.01;
       if (newLevel >= 0) {
         spotifyPlayer.setVolume(newLevel)
-          .then(() => {
-            console.log(`Volume set to ${newLevel}.`);
-          });
+          // .then(() => {
+          //   console.log(`Volume set to ${newLevel}.`);
+          // });
       }
     });
 });
@@ -159,9 +163,9 @@ $volumeUpSpotify.click( () => {
       const newLevel = currentLevel + 0.01;
       if (newLevel <= 1) {
         spotifyPlayer.setVolume(newLevel)
-          .then(() => {
-            console.log(`Volume set to ${newLevel}.`)
-          });
+          // .then(() => {
+          //   console.log(`Volume set to ${newLevel}.`)
+          // });
       }
     });
 });
@@ -170,7 +174,7 @@ const $volumeRangeSpotify = $('#volume-range-spotify');
 $volumeRangeSpotify.change( () => {
   let newLevel = $volumeRangeSpotify.val() / 100;
   spotifyPlayer.setVolume(newLevel)
-    .then(() => {
-      console.log(`Volume set to ${newLevel}.`)
-    })
+    // .then(() => {
+    //   console.log(`Volume set to ${newLevel}.`)
+    // })
 })

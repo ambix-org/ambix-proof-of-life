@@ -24,13 +24,13 @@ function onYouTubeIframeAPIReady() {  // eslint-disable-line
 
 const $playYT = $('#play-yt')
 $playYT.click( () => {
-  console.log('Starting Video');
+  // console.log('Starting Video');
   player.playVideo();
 });
 
 const $stopYT = $('#stop-yt');
 $stopYT.click( () => {
-  console.log('Stopping Video');
+  // console.log('Stopping Video');
   player.stopVideo();
 });
 
@@ -38,7 +38,7 @@ const $volumeRange = $('#volume-range-yt');
 $volumeRange.change( () => {
   let newLevel = $volumeRange.val();
   player.setVolume(newLevel);
-  console.log(`Volume set to ${newLevel}`);
+  // console.log(`Volume set to ${newLevel}`);
 })
 
 const $volumeUpYT = $('#volume-up-yt');
@@ -48,9 +48,9 @@ $volumeUpYT.click( () => {
   if (newLevel <= 100) {
     player.setVolume(newLevel);
     $volumeRange.val(newLevel);
-    console.log(`Volume set to ${currentLevel}`);
+    // console.log(`Volume set to ${currentLevel}`);
   } else {
-    console.log('Volume maxxed out.');
+    // console.log('Volume maxxed out.');
   }
 });
 
@@ -61,21 +61,21 @@ $volumeDownYT.click( () => {
   if (newLevel >= 0) {
     player.setVolume(newLevel);
     $volumeRange.val(newLevel);
-    console.log(`Volume set to ${currentLevel}`);
+    // console.log(`Volume set to ${currentLevel}`);
   } else {
-    console.log('Volume minned out.');
+    // console.log('Volume minned out.');
   }
 });
 // ===================================
 function onPlayerReady() {
-  console.log('Video Ready!')
-  console.log(`Default volume: ${player.getVolume()}`)
+  // console.log('Video Ready!')
+  // console.log(`Default volume: ${player.getVolume()}`)
   $volumeRange.val(player.getVolume());
 }
 
 function onPlayerStateChange(event) {
-  console.log('State Changed!')
-  console.log(event.data)
+  // console.log('State Changed!')
+  // console.log(event.data)
 }
 
 // Ambient Sources
@@ -90,7 +90,7 @@ ambienceSources.forEach(source => {
   const $button = $(`<button class="track">${source[0]}</button>`);
   $button.click( () => {
     player.loadVideoById(source[1])
-    console.log($('.track'))
+    // console.log($('.track'))
     $('.track').removeClass('selected');
     $button.addClass('selected');
   });
