@@ -37,6 +37,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     // This function is called on connect() and every hour to re-auth
     getOAuthToken: cb => {
       console.log('Authorizing Spotify Player')
+      if (REFRESH === null) throw 'Please sign in to Spotify';
       axios.post(REFRESH_URI, `refresh=${REFRESH}`)
         .then(response => {
           const accessToken = response.data.accessToken;
