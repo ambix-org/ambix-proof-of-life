@@ -73,7 +73,7 @@ button {
     font-weight: bold;
     background-color: rgb(71, 128, 88);
     font-family: 'Montserrat', sans-serif;
-    margin: 20px;
+    margin: 20px 10px 0 10px;
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -101,6 +101,14 @@ button:focus {
     display: none;
 }
 
+.dim {
+    color: rgba(117, 117, 117, 0.5);
+}
+
+.dim-range {
+    opacity: 0.17;
+}
+
 .player-controls, 
 .volume-controls, 
 .spotify-connect-buttons {
@@ -115,6 +123,7 @@ button:focus {
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     height: 2em;
+    margin-top: 20px;
 }
 
 #track-info {
@@ -131,13 +140,15 @@ button:focus {
 }
 
 #song-title {
-    font-size: 18;
+    height: 18px;
+    font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 #artist {
-    font-size: 14;
+    height: 14px;
+    font-size: 14px;
     font-style: italic;
 }
 
@@ -147,8 +158,8 @@ button:focus {
 
 #ambience-tracks {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    height: 80px;
 }
 
 .selected {
@@ -158,7 +169,8 @@ button:focus {
 }
 
 .module {
-    border: 2px solid #757575;
+    box-shadow: 0px 0px 10px rgba(117, 117, 117, 0.75);
+    border-radius: 5px;
     border-radius: 5px;
     padding: 20px;
 }
@@ -183,13 +195,12 @@ button:focus {
     height: 300px;
     width: 300px;
     margin-bottom: 10px;
-    /* opacity: 0; */
 }
 
 .display-artwork {
     transition: all 2s ease-in;
     border-radius: 5px;
-    box-shadow: 0px 0px 12px rgb(117, 117, 117);
+    box-shadow: 0px 0px 10px rgba(117, 117, 117, 0.75);
 }
 
 #spotify-player,

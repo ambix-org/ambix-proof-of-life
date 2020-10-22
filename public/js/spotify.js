@@ -1,9 +1,7 @@
 'use strict';
 
-// Token Management
-
 const REFRESH = localStorage.getItem('refresh');
-const REFRESH_URI = 'https://ambix.herokuapp.com/spotify-refresh';
+const REFRESH_URI = 'http://localhost:3000/spotify-refresh';
 
 const $spotifyConnect = $('#spotify-connect');
 let $playerStatus = $('#player-status');
@@ -27,14 +25,11 @@ $logout.click( () => {
   location.reload();
 });
 
-// Spotify Web Playback SDK
-
 let spotifyPlayer;
 
 window.onSpotifyWebPlaybackSDKReady = () => {
   spotifyPlayer = new Spotify.Player({
     name: 'Ambix',
-    // This function is called on connect() and every hour to re-auth
     getOAuthToken: cb => {
       console.log('Authorizing Spotify Player')
       if (REFRESH === null) throw 'Please sign in to Spotify';
@@ -49,7 +44,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     }
   });
 
-  // Error handling
   spotifyPlayer.addListener('initialization_error', ({ message }) => {
     console.error('Initialization Error:', message);
   });
@@ -65,117 +59,124 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     console.error('Playback Error:', message);
   });
 
-  // Playback status updates
   spotifyPlayer.addListener('player_state_changed', state => {
-    // console.log('State Change: ', state);
     displayTrackInfo(state);
+    renderControls(state);
     spotifyPlayer.getVolume()
       .then(currentLevel => {
         $volumeRangeSpotify.value = currentLevel * 100;
       });
   });
 
-  // Ready
   spotifyPlayer.addListener('ready', ({ device_id }) => {
     console.log('Ready with Device ID', device_id);
     $playerStatus.text('Ready, select \'Ambix\' in Spotify');
     $playerStatus.attr('class', 'success');
+    spotifyPlayer.setVolume(.3)
+      .then(() => {
+        $volumeRangeSpotify.value = 30;
+      });
   });
 
-  // Not Ready
   spotifyPlayer.addListener('not_ready', ({ device_id }) => {
     console.log('Device ID has gone offline', device_id);
   });
 
-  // Connect to the player!
   spotifyPlayer.connect();
 };
 
 function displayTrackInfo(state){
   const $artwork = $('#artwork');
   const $artist = $('#artist');
-  const $title = $('#song-title')
-
-  const artistName = state.track_window.current_track.artists.reduce((accum, artist) => {
-    return accum ? `${accum} | ${artist.name}` : `${artist.name}`;
-  }, '');
-  const songTitle = state.track_window.current_track.name;
-  const artworkURL = state.track_window.current_track.album.images[0].url || './img/spotify-icon.png';
+  const $title = $('#song-title');
+  let artistName, songTitle, artworkURL;
+  if (state){
+    artistName = state.track_window.current_track.artists.reduce((accum, artist) => {
+      return accum ? `${accum} | ${artist.name}` : `${artist.name}`;
+    }, '');
+    songTitle = state.track_window.current_track.name;
+    artworkURL = state.track_window.current_track.album.images[0].url || './img/spotify-icon.png';
+    $artwork.addClass('display-artwork');
+  } else {
+    songTitle = 'Select \'Ambix\' in Spotify';
+    artistName = '';
+    artworkURL= 'img/spotify-icon.png';
+    $artwork.removeClass('display-artwork');
+  }
 
   $artwork.attr('src', artworkURL);
   $artwork.attr('alt', songTitle);
-  $artwork.addClass('display-artwork');
   $title.text(songTitle);
   $artist.text(artistName);
 }
 
+function renderControls(state) {
+  const $prevButton = $('#previous');
+  const $nextButton = $('#next');
+  const $playbackButton = $('#playback');
+
+  if (state) {
+    const paused = state.paused;
+    const nextTracks = state.track_window.next_tracks.length;
+    const previousTracks = state.track_window.previous_tracks.length;
+
+    const playbackClass = paused ? 'fas fa-play' : 'fas fa-pause';
+    const nextClass = nextTracks ? 'fas fa-forward' : 'fas fa-forward dim';
+    const prevClass = previousTracks ? 'fas fa-backward' : 'fas fa-backward dim';
+
+    $playbackButton.attr('class', playbackClass);
+    $nextButton.attr('class', nextClass);
+    $prevButton.attr('class', prevClass);
+  } else {
+    $playbackButton.attr('class', 'fa fa-play dim');
+    $nextButton.attr('class', 'fa fa-forward dim');
+    $prevButton.attr('class', 'fa fa-backward dim');
+  }
+}
+
 // Controls
 
-const $playSpotify = $('#play');
-$playSpotify.click( () => {
-  spotifyPlayer.resume()
-    // .then(() => {
-    //   console.log('Resumed!');
-    // });
-});
-
-const $pauseSpotify = $('#pause');
-$pauseSpotify.click( () => {
-  spotifyPlayer.pause()
-    // .then(() => {
-    //   console.log('Paused!');
-    // });
+const $toggleSptofiyPlayback = $('#playback');
+$toggleSptofiyPlayback.click( () => {
+  if ($toggleSptofiyPlayback.hasClass('fa-play')){
+    spotifyPlayer.resume();
+  } else {
+    spotifyPlayer.pause();
+  }
 });
 
 const $nextTrack = $('#next');
 $nextTrack.click( () => {
-  spotifyPlayer.nextTrack()
-    // .then(() => {
-    //   console.log('Skipped to next track!');
-    // });
+  spotifyPlayer.nextTrack();
 });
 
 const $previousTrack = $('#previous');
 $previousTrack.click( () => {
-  spotifyPlayer.previousTrack()
-    // .then(() => {
-    //   console.log('Set to previous track!');
-    // });
+  spotifyPlayer.previousTrack();
 });
 
 const $volumeDownSpotify = $('#volume-down-spotify');
 $volumeDownSpotify.click( () => {
-  spotifyPlayer.getVolume()
-    .then(currentLevel => {
-      const newLevel = currentLevel - 0.01;
-      if (newLevel >= 0) {
-        spotifyPlayer.setVolume(newLevel)
-          // .then(() => {
-          //   console.log(`Volume set to ${newLevel}.`);
-          // });
-      }
-    });
+  const currentLevel = parseInt($volumeRangeSpotify.val());
+  if (currentLevel > 0) {
+    const newLevel = currentLevel - 1;
+    $volumeRangeSpotify.val(newLevel);
+    spotifyPlayer.setVolume(newLevel / 100);
+  }
 });
 
 const $volumeUpSpotify = $('#volume-up-spotify');
 $volumeUpSpotify.click( () => {
-  spotifyPlayer.getVolume()
-    .then(currentLevel => {
-      const newLevel = currentLevel + 0.01;
-      if (newLevel <= 1) {
-        spotifyPlayer.setVolume(newLevel)
-          // .then(() => {
-          //   console.log(`Volume set to ${newLevel}.`)
-          // });
-      }
-    });
+  const currentLevel = parseInt($volumeRangeSpotify.val());
+  if (currentLevel < 100) {
+    const newLevel = currentLevel + 1;
+    $volumeRangeSpotify.val(newLevel);
+    spotifyPlayer.setVolume(newLevel / 100);
+  }
 });
 
 const $volumeRangeSpotify = $('#volume-range-spotify');
 $volumeRangeSpotify.change( () => {
   let newLevel = $volumeRangeSpotify.val() / 100;
-  spotifyPlayer.setVolume(newLevel)
-    // .then(() => {
-    //   console.log(`Volume set to ${newLevel}.`)
-    // })
+  spotifyPlayer.setVolume(newLevel);
 })
