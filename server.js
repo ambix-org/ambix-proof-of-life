@@ -16,11 +16,11 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.get('/', (request, response) => {
+app.get('/', (_, response) => {
   response.render('index', {set_token :false});
 });
 
-app.get('/spotify-signin', (request, response) => {
+app.get('/spotify-signin', (_, response) => {
   superagent.get('https://accounts.spotify.com/authorize')
     .query({client_id: SPOTIFY_ID})
     .query({response_type: 'code'})
