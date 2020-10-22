@@ -2,7 +2,7 @@
 
 const REFRESH = localStorage.getItem('refresh');
 // const REFRESH_URI = 'http://localhost:3000/spotify-refresh';
-const REFRESH_URI = 'https://ambix.herokuapp.com/spotify-refreesh';
+const REFRESH_URI = 'https://ambix.herokuapp.com/spotify-refresh';
 
 const $spotifyConnect = $('#spotify-connect');
 let $playerStatus = $('#player-status');
